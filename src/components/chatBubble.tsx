@@ -1,8 +1,14 @@
 import React,{useEffect} from 'react';
-import { Box, Typography, CircularProgress } from '@mui/material';
+import { Box, Typography, 
+  // CircularProgress
+ } from '@mui/material';
 
 const ChatBubble = React.memo((props: any) => {
-  const { isLoading, role, message } = props;
+  const {
+    //  isLoading,
+      role,
+       message
+       } = props;
 
   const isUser = role === 'user';
   useEffect(()=>{

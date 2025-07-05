@@ -46,7 +46,7 @@ const Sidebar = React.memo((props: any) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleTabChange = (
-    event: React.SyntheticEvent,
+    _event: React.SyntheticEvent,
      newValue: number) => {
     setCurrentTab(newValue);
   };

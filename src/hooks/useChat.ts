@@ -19,7 +19,7 @@ const { chat, getChatHistory } = useChatService();
     
   });
 
-  const { data: chatHistory = [], isLoading } = useQuery({
+  const { data: chatHistory = [] } = useQuery({
     queryKey: ['chatHistory', sessionId],
     queryFn: async () => {
       if (!sessionId) throw new Error("No session ID");
