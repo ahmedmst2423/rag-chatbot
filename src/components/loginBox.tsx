@@ -58,9 +58,19 @@ const LoginBox = React.memo(({ onSubmit, isLoading }:any) => {
               variant="contained"
               color="primary"
               fullWidth
-              sx={{ mt: 2 }}
+              sx={{
+                 mt: 2,
+                 height:50
+                }}
+                 
+              disabled={isLoading}
+              
             >
-              {isLoading ? <CircularProgress/> :"Log In"}
+              {isLoading ? <CircularProgress 
+              sx={{
+                height:"auto"
+              }}
+              color="secondary"/> :"Log In"}
             </Button>
           </form>
         </CardContent>

@@ -5,7 +5,7 @@ import { useAuth } from '../context/authContext';
 import { useNotification } from '../context/notificationContext';
 
 const LoginPage = () => {
-  const {login, } = useAuth();
+  const {login,loading } = useAuth();
   const {showError,showSuccess} = useNotification();
   const navigate = useNavigate();
 
@@ -39,6 +39,7 @@ const LoginPage = () => {
       >
         <LoginBox
           onSubmit={handleLogin}
+          isLoading={loading}
           />
           <Button variant='outlined'
            color='primary'

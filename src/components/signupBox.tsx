@@ -5,9 +5,10 @@ import {
   Typography,
   TextField,
   Button,
+  CircularProgress,
   // Box,
 } from '@mui/material';
-const RegisterBox = ({ onSubmit }:any) => {
+const RegisterBox = ({ onSubmit, isLoading }:any) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -37,6 +38,7 @@ const RegisterBox = ({ onSubmit }:any) => {
               onChange={(e:any) => setEmail(e.target.value)}
               type="email"
               required
+              disabled={isLoading}
             />
             <TextField
               label="Password"
@@ -47,15 +49,26 @@ const RegisterBox = ({ onSubmit }:any) => {
               onChange={(e:any) => setPassword(e.target.value)}
               type="password"
               required
+              disabled={isLoading}
             />
             <Button
               type="submit"
               variant="contained"
               color="primary"
               fullWidth
-              sx={{ mt: 2 }}
+              sx={{
+                 mt: 2,
+                 height:50
+                }}
+                 
+              disabled={isLoading}
+              
             >
-              Sign Up
+              {isLoading ? <CircularProgress 
+              sx={{
+                height:"auto"
+              }}
+              color="secondary"/> :"Sign Up"}
             </Button>
           </form>
         </CardContent>
