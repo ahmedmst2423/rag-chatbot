@@ -30,7 +30,7 @@ const RegisterPage = () => {
       width={'100%'}
     >
       <Box>
-        <Box component={'img'} src='src/assets/logo.png' sx={{ width: 250 }} />
+        <Box component={'img'} src='logo.png' sx={{ width: 250 }} />
       </Box>
       <Box sx={{ mb: 22, mx: 3 }}>
         <RegisterBox onSubmit={handleSignup} />

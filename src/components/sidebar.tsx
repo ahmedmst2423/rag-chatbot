@@ -82,7 +82,7 @@ const Sidebar = React.memo((props: any) => {
       >
         <Box
           component="img"
-          src="src/assets/chat_page_logo.png"
+          src="chat_page_logo.png"
           alt="QueryKoala"
           sx={{
             width: '70%',
