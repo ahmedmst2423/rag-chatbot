@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import { CloudUpload, Close } from '@mui/icons-material';
 import { useDropzone } from 'react-dropzone';
+import { useFiles } from '../hooks/useFiles';
 
 const style = {
   position: 'absolute' as const,
@@ -38,7 +39,8 @@ const dropzoneStyle = {
 };
 
 const UploadModal = (props: any) => {
-  const { onSubmit, onClose, upload } = props;
+  const { onSubmit, onClose } = props;
+  const {upload} = useFiles();
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   
 

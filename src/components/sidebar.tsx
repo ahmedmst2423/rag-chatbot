@@ -7,179 +7,255 @@ import {
   Card,
   CardContent,
   CardActionArea,
-  Stack,
-  CardActions,
-  Button,
-  LinearProgress,
   Tabs,
   Tab,
   IconButton,
-  Tooltip
+  Tooltip,
+  useTheme,
+  useMediaQuery
 } from '@mui/material';
 import InsertDriveFile from '@mui/icons-material/InsertDriveFile';
 import Chat from '@mui/icons-material/Chat';
 import Add from '@mui/icons-material/Add';
-import { Logout } from '@mui/icons-material';
+import { Logout, Menu } from '@mui/icons-material';
 import FilesTab from './filesTab';
 import ChatsTab from './chatsTab';
 
 const drawerWidth = 280;
 
 const Sidebar = React.memo((props: any) => {
-  const { 
-    files, 
-    onFileClick, 
-    onFileDelete, 
+  const {
+    files,
+    onFileClick,
+    onFileDelete,
     sessions,
     onSessionClick,
     onSessionDelete,
-    children, 
-    isLoading, 
+    children,
+    isLoading,
     onLogout,
     onNewChat
   } = props;
 
   const [currentTab, setCurrentTab] = useState(0);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  useEffect(() => {
-    console.log(`Files in Chat Page: ${files}`);
-    console.log(`Sessions in Chat Page: ${sessions}`);
-  }, [files, sessions]);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setCurrentTab(newValue);
   };
 
-  return (
-    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
-      <Drawer
-        variant="permanent"
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const handleNewChat = () => {
+    onNewChat?.();
+    if (isMobile) {
+      setMobileOpen(false);
+    }
+  };
+
+  const handleLogout = () => {
+    onLogout?.();
+    if (isMobile) {
+      setMobileOpen(false);
+    }
+  };
+
+  const drawerContent = (
+    <>
+      <Toolbar
+        disableGutters
         sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          [`& .MuiDrawer-paper`]: {
-            width: drawerWidth,
-            boxSizing: 'border-box',
-            padding: 2,
-            backgroundColor: '#f8f9fa',
-            display: 'flex',
-            flexDirection: 'column',
-          },
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          px: 1,
         }}
       >
-        {/* Header with Title and New Chat Button */}
-        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Typography variant="h6" noWrap>
-            Dashboard
-          </Typography>
-          <Tooltip title="New Chat" arrow>
-            <IconButton 
-              onClick={() => onNewChat?.()}
-              color="primary"
-              sx={{ 
-                backgroundColor: 'primary.main',
-                color: 'white',
-                '&:hover': {
-                  backgroundColor: 'primary.dark',
-                },
-                width: 36,
-                height: 36
-              }}
-            >
-              <Add />
-            </IconButton>
-          </Tooltip>
-        </Toolbar>
-
-        {/* Tabs */}
-        <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 1 }}>
-          <Tabs 
-            value={currentTab} 
-            onChange={handleTabChange} 
-            variant="fullWidth"
-            sx={{ minHeight: 40 }}
-          >
-            <Tab 
-              label="Chats" 
-              icon={<Chat />} 
-              iconPosition="start"
-              sx={{ minHeight: 40, fontSize: '0.875rem' }}
-            />
-            <Tab 
-              label="Files" 
-              icon={<InsertDriveFile />} 
-              iconPosition="start"
-              sx={{ minHeight: 40, fontSize: '0.875rem' }}
-            />
-          </Tabs>
-        </Box>
-
-        {/* Tab Content with Scrolling */}
-        <Box 
-          sx={{ 
-            flex: 1, 
-            overflow: 'hidden',
-            display: 'flex',
-            flexDirection: 'column'
+        <Box
+          component="img"
+          src="src/assets/chat_page_logo.png"
+          alt="QueryKoala"
+          sx={{
+            width: '70%',
+            height: 'auto',
+            objectFit: 'contain'
           }}
-        >
-          <Box 
-            sx={{ 
-              flex: 1,
-              overflowY: 'auto',
-              overflowX: 'hidden',
-              '&::-webkit-scrollbar': {
-                width: '6px',
+        />
+
+        <Tooltip title="New Chat" arrow>
+          <IconButton
+            onClick={handleNewChat}
+            color="primary"
+            sx={{
+              backgroundColor: 'secondary.main',
+              color: 'white',
+              '&:hover': {
+                backgroundColor: 'tertiary.dark',
               },
-              '&::-webkit-scrollbar-track': {
-                backgroundColor: '#f1f1f1',
-                borderRadius: '3px',
-              },
-              '&::-webkit-scrollbar-thumb': {
-                backgroundColor: '#c1c1c1',
-                borderRadius: '3px',
-                '&:hover': {
-                  backgroundColor: '#a8a8a8',
-                },
-              },
+              width: 30,
+              height: 30,
             }}
           >
-            {currentTab === 0 && (
-              <ChatsTab
-                sessions={sessions}
-                onSessionClick={onSessionClick}
-                onSessionDelete={onSessionDelete}
-                isLoading={isLoading}
-              />
-            )}
-            {currentTab === 1 && (
-              <FilesTab
-                files={files}
-                onFileClick={onFileClick}
-                onFileDelete={onFileDelete}
-                isLoading={isLoading}
-              />
-            )}
-          </Box>
-        </Box>
+            <Add />
+          </IconButton>
+        </Tooltip>
+      </Toolbar>
 
-        {/* Logout Button */}
-        <Box sx={{ mt: 'auto', pt: 2 }}>
-          <Card variant="outlined" sx={{ borderRadius: 2 }}>
-            <CardActionArea onClick={() => onLogout?.()}>
-              <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2, py: 1.5 }}>
-                <Logout color="error" />
-                <Typography variant="body1" fontWeight={500}>
-                  Logout
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Box>
-      </Drawer>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 1 }}>
+        <Tabs
+          value={currentTab}
+          onChange={handleTabChange}
+          variant="fullWidth"
+          sx={{ minHeight: 40 }}
+        >
+          <Tab label="Chats" icon={<Chat />} iconPosition="start" sx={{ fontSize: '0.875rem' }} />
+          <Tab label="Files" icon={<InsertDriveFile />} iconPosition="start" sx={{ fontSize: '0.875rem' }} />
+        </Tabs>
+      </Box>
 
-      {/* Main Content */}
-      <Box component="main" sx={{ flexGrow: 1, width: '100% - 280px', ml: 2, mr: 2, mt: 2 }}>
+      <Box
+        sx={{
+          flex: 1,
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column'
+        }}
+      >
+        <Box
+          sx={{
+            flex: 1,
+            overflowY: 'auto',
+            overflowX: 'hidden',
+            '&::-webkit-scrollbar': {
+              width: '6px',
+            },
+            '&::-webkit-scrollbar-track': {
+              backgroundColor: '#f1f1f1',
+              borderRadius: '3px',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              backgroundColor: '#c1c1c1',
+              borderRadius: '3px',
+              '&:hover': {
+                backgroundColor: '#a8a8a8',
+              },
+            },
+          }}
+        >
+          {currentTab === 0 ? (
+            <ChatsTab
+              sessions={sessions}
+              onSessionClick={onSessionClick}
+              onSessionDelete={onSessionDelete}
+              isLoading={isLoading}
+            />
+          ) : (
+            <FilesTab
+              files={files}
+              onFileClick={onFileClick}
+              onFileDelete={onFileDelete}
+              isLoading={isLoading}
+            />
+          )}
+        </Box>
+      </Box>
+
+      <Box sx={{ mt: 'auto', pt: 2 }}>
+        <Card variant="outlined" sx={{ borderRadius: 2 }}>
+          <CardActionArea onClick={handleLogout}>
+            <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2, py: 1.5 }}>
+              <Logout color="error" />
+              <Typography variant="body1" fontWeight={500}>
+                Logout
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      </Box>
+    </>
+  );
+
+  return (
+    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+      {isMobile && (
+        <IconButton
+          onClick={handleDrawerToggle}
+          sx={{
+            position: 'fixed',
+            top: 16,
+            left: 16,
+            zIndex: 1300,
+            backgroundColor: 'primary.main',
+            color: 'white',
+            '&:hover': {
+              backgroundColor: 'primary.dark',
+            }
+          }}
+        >
+          <Menu />
+        </IconButton>
+      )}
+
+      {!isMobile && (
+        <Drawer
+          variant="permanent"
+          sx={{
+            width: drawerWidth,
+            flexShrink: 0,
+            [`& .MuiDrawer-paper`]: {
+              width: drawerWidth,
+              boxSizing: 'border-box',
+              paddingBottom: 2,
+              backgroundColor: '#f8f9fa',
+              display: 'flex',
+              flexDirection: 'column',
+            },
+          }}
+        >
+          {drawerContent}
+        </Drawer>
+      )}
+
+      {isMobile && (
+        <Drawer
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true,
+          }}
+          sx={{
+            display: { xs: 'block', md: 'none' },
+            [`& .MuiDrawer-paper`]: {
+              width: drawerWidth,
+              boxSizing: 'border-box',
+              paddingBottom: 2,
+              backgroundColor: '#f8f9fa',
+              display: 'flex',
+              flexDirection: 'column',
+            },
+          }}
+        >
+          {drawerContent}
+        </Drawer>
+      )}
+
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          width: { xs: '100%', md: `calc(100% - ${drawerWidth}px)` },
+          ml: { md: `${drawerWidth}px` },
+          display: 'flex',
+          flexDirection: 'column',
+          position: 'relative'
+        }}
+      >
         {children}
       </Box>
     </Box>

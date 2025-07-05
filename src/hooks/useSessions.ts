@@ -15,7 +15,7 @@ export const useSessions = () => {
     mutationFn: newSession,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['sessions'] })
-      setSession(data ?? null)
+      setSession(data ? data.id : null)
       
     }
   })

@@ -22,7 +22,7 @@ const RegisterBox = ({ onSubmit }:any) => {
 
   return (
     
-      <Card sx={{ width: 360, p: 2 }}>
+      <Card sx={{maxHeight: 400 ,p: 2, display: 'flex', flexDirection: 'column', maxWidth: 400, margin: 'auto' }}>
         <CardContent>
           <Typography variant="h5" gutterBottom align="center">
             Register

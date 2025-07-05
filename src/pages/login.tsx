@@ -7,6 +7,8 @@ import { useNotification } from '../context/notificationContext';
 const LoginPage = () => {
   const { isAuthenticated, login, } = useAuth();
   const {showError,showSuccess} = useNotification();
+  const navigate = useNavigate();
+
 
   const handleLogin = async (data: { email: string; password: string }) => {
     login(data.email, data.password)
@@ -37,8 +39,14 @@ const LoginPage = () => {
       >
         <LoginBox
           onSubmit={handleLogin}
-        
-        ></LoginBox>
+          />
+          <Button variant='outlined'
+           color='primary'
+           sx={{mt:2}
+           }
+           onClick={()=>navigate('/register')}
+           >
+             Signup Here !!</Button>
       </Box>
     </Box>
     
