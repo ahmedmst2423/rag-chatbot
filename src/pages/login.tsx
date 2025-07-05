@@ -3,21 +3,27 @@ import { useNavigate } from 'react-router-dom';
 import LoginBox from '../components/loginBox';
 import { useAuth } from '../context/authContext';
 import { useNotification } from '../context/notificationContext';
+import { useState } from 'react';
 
 const LoginPage = () => {
-  const {login,loading } = useAuth();
+  const {login} = useAuth();
   const {showError,showSuccess} = useNotification();
   const navigate = useNavigate();
+  const [isLoading,setIsloading] = useState(false);
 
 
   const handleLogin = async (data: { email: string; password: string }) => {
+    setIsloading(true);
     login(data.email, data.password)
       .then(()=>{
         showSuccess('Login successful');
         // isAuthenticated ? navigate('/chat') : navigate('/'); // 👈 redirect to chat page after login
       })
       .catch((error:any)=>{
-        showError(error);
+        showError(error.detail);
+      })
+      .finally(()=>{
+        setIsloading(false);
       })
     
   };
@@ -39,7 +45,7 @@ const LoginPage = () => {
       >
         <LoginBox
           onSubmit={handleLogin}
-          isLoading={loading}
+          isLoading={isLoading}
           />
           <Button variant='outlined'
            color='primary'

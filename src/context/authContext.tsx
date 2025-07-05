@@ -20,7 +20,7 @@ export const AuthProvider = ({ children}:any) => {
   const service = authService();
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const {create} = useSessions()
 
   // Load token + user from localStorage on first load
@@ -32,13 +32,10 @@ export const AuthProvider = ({ children}:any) => {
         .then(setUser)
         .catch(() => logout()); // token invalid or expired
     }
-    setLoading(false);
   }, []);
 
   const login = async (email: string, password: string) => {
-    setLoading(true);
     const response:any = await service.login(email, password);
-    setLoading(false);
     const token = response.data.access_token;
     token ?? localStorage.setItem("access_token", token);
     setAccessToken(token);
