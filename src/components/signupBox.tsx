@@ -5,7 +5,7 @@ import {
   Typography,
   TextField,
   Button,
-  Box,
+  // Box,
 } from '@mui/material';
 const RegisterBox = ({ onSubmit }:any) => {
   const [email, setEmail] = useState('');

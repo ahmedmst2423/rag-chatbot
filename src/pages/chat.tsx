@@ -1,7 +1,6 @@
 import { Box } from '@mui/material';
 import { useState } from 'react';
 import { useAuth } from '../context/authContext';
-import { useNotification } from '../context/notificationContext';
 import { useSession } from '../context/sessionContext';
 import { useFiles } from '../hooks/useFiles';
 import { useSessions } from '../hooks/useSessions';
@@ -9,22 +8,19 @@ import { useChat } from '../hooks/useChat';
 import Sidebar from '../components/sidebar';
 import ChatBox from '../components/chatBox';
 import ChatWindow from '../components/chatWindow';
-import UploadModal from '../components/uploadModal';
-import ConfirmModal from '../components/confirmModal';
 import { useModal } from '../context/modalContext';
 
 const ChatPage = () => {
   const { logout } = useAuth();
   const { session, setSession } = useSession();
 
-  const [query, setQuery] = useState('');
-  const [selectedFile, setSelectedFile] = useState<any>(null);
+  const [query] = useState('');
 
   const {
     files,
-    isLoading: loadingFiles,
+    // isLoading: loadingFiles,
     upload,
-    isUploadLoading,
+    // isUploadLoading,
     remove: removeFile,
     isRemoveFileLoading
   } = useFiles();
@@ -37,12 +33,16 @@ const ChatPage = () => {
   } = useSessions();
 
   const { chatHistory, chat, isChatLoading } = useChat(session);
-  const { openModal, closeModal, modalType, modalProps } = useModal();
+  const { openModal,
+     closeModal,
+      // modalType,
+      //  modalProps
+       } = useModal();
 
   const handleSend = (query: string) => {
     const userMessage = { role: 'user', message: query };
     chatHistory.push(userMessage);
-    const response = chat({ query });
+    chat({ query });
   };
 
   return (

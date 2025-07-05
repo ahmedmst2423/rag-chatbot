@@ -34,7 +34,7 @@ export const useFiles = () => {
       queryClient.invalidateQueries({ queryKey: ['files'] });
 
     },
-    onError: (error) => {
+    onError: () => {
       showError('File upload failed ');
       
     }

@@ -1,18 +1,18 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import LoginBox from '../components/loginBox';
 import { useAuth } from '../context/authContext';
 import { useNotification } from '../context/notificationContext';
 
 const LoginPage = () => {
-  const { isAuthenticated, login, } = useAuth();
+  const {login, } = useAuth();
   const {showError,showSuccess} = useNotification();
   const navigate = useNavigate();
 
 
   const handleLogin = async (data: { email: string; password: string }) => {
     login(data.email, data.password)
-      .then((response)=>{
+      .then(()=>{
         showSuccess('Login successful');
         // isAuthenticated ? navigate('/chat') : navigate('/'); // 👈 redirect to chat page after login
       })

@@ -15,12 +15,6 @@ const queryKoalaTheme = createTheme({
       dark: '#388e3c',
       contrastText: '#ffffff',
     },
-    tertiary: {
-      main: '#8e44ad', // Purple from magnifying glass
-      light: '#ba68c8',
-      dark: '#6a1b9a',
-      contrastText: '#ffffff',
-    },
     background: {
       default: '#f8f9fa',
       paper: '#ffffff',

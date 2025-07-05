@@ -11,7 +11,7 @@ const RegisterPage = () => {
 
   const handleSignup = async (data: { email: string; password: string }) => {
     signup(data.email, data.password)
-      .then((response: any) => {
+      .then(() => {
         showSuccess('Signup successful');
         // navigate('/chat'); // 👈 redirect if needed
       })
@@ -34,7 +34,7 @@ const RegisterPage = () => {
       </Box>
       <Box sx={{ mb: 22, mx: 3 }}>
         <RegisterBox onSubmit={handleSignup} />
-        <Button variant='outlined' color='tertiary' sx={{ mt: 2 }} onClick={() => navigate('/login')}>
+        <Button variant='outlined' color='primary' sx={{ mt: 2 }} onClick={() => navigate('/login')}>
           Already have an account? Login here!
         </Button>
       </Box>

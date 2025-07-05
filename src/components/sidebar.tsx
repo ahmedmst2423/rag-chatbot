@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { 
+  // useEffect,
+   useState } from 'react';
 import {
   Drawer,
   Toolbar,
@@ -43,7 +45,9 @@ const Sidebar = React.memo((props: any) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleTabChange = (
+    event: React.SyntheticEvent,
+     newValue: number) => {
     setCurrentTab(newValue);
   };
 
