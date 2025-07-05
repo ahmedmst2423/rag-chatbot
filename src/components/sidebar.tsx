@@ -186,24 +186,7 @@ const Sidebar = React.memo((props: any) => {
 
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh' }}>
-      {isMobile && (
-        <IconButton
-          onClick={handleDrawerToggle}
-          sx={{
-            position: 'fixed',
-            top: 16,
-            left: 16,
-            zIndex: 1300,
-            backgroundColor: 'primary.main',
-            color: 'white',
-            '&:hover': {
-              backgroundColor: 'primary.dark',
-            }
-          }}
-        >
-          <Menu />
-        </IconButton>
-      )}
+      
 
       {!isMobile && (
         <Drawer
@@ -254,12 +237,38 @@ const Sidebar = React.memo((props: any) => {
         sx={{
           flexGrow: 1,
           width: { xs: '100%', md: `calc(100% - ${drawerWidth}px)` },
-          ml: { md: `${drawerWidth}px` },
           display: 'flex',
           flexDirection: 'column',
           position: 'relative'
         }}
       >
+        {isMobile && (
+        <Box
+          sx={{
+            height:20,
+            mb:2
+          }}
+        >
+        
+        <IconButton
+          onClick={handleDrawerToggle}
+          sx={{
+            mb:5,
+            position: 'fixed',
+            top: 16,
+            right: 16,
+            zIndex: 1300,
+            backgroundColor: 'primary.main',
+            color: 'white',
+            '&:hover': {
+              backgroundColor: 'primary.dark',
+            }
+          }}
+          >
+          <Menu />
+        </IconButton>
+          </Box>
+      )}  
         {children}
       </Box>
     </Box>

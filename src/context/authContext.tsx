@@ -4,6 +4,7 @@ import
  { createContext, useContext, useEffect, useState }
   from "react";
 import authService from "../services/authService";
+import { useSessions } from "../hooks/useSessions";
 interface AuthContextType {
   accessToken: string | null;
   user: any;
@@ -20,6 +21,7 @@ export const AuthProvider = ({ children}:any) => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
+  const {create} = useSessions()
 
   // Load token + user from localStorage on first load
   useEffect(() => {
@@ -40,6 +42,8 @@ export const AuthProvider = ({ children}:any) => {
     const token = response.data.access_token;
     token ?? localStorage.setItem("access_token", token);
     setAccessToken(token);
+    create.mutate();
+
     console.log(`token: ${accessToken}`)
 
     const user:any = await service.getCurrentUser();

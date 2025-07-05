@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 
 type SessionContextType = {
   session: number | null;
@@ -10,15 +9,8 @@ const SessionContext = createContext<SessionContextType | undefined>(undefined);
 
 export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [session, setSession] = useState<number | null>(null);
-  const [searchParams] = useSearchParams();
 
-  useEffect(() => {
-    const sessionParam = searchParams.get('session_id');
-    if (sessionParam && !isNaN(Number(sessionParam))) {
-      setSession(Number(sessionParam));
-    }
-  }, [searchParams]);
-
+  
   return (
     <SessionContext.Provider value={{ session, setSession }}>
       {children}

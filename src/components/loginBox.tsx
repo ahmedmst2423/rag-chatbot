@@ -6,10 +6,11 @@ import {
   Typography,
   TextField,
   Button,
+  CircularProgress,
   // Box,
 } from '@mui/material';
 
-const LoginBox = React.memo(({ onSubmit }:any) => {
+const LoginBox = React.memo(({ onSubmit, isLoading }:any) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -39,6 +40,7 @@ const LoginBox = React.memo(({ onSubmit }:any) => {
               onChange={(e:any) => setEmail(e.target.value)}
               type="email"
               required
+              disabled={isLoading}
             />
             <TextField
               label="Password"
@@ -49,6 +51,7 @@ const LoginBox = React.memo(({ onSubmit }:any) => {
               onChange={(e:any) => setPassword(e.target.value)}
               type="password"
               required
+              disabled={isLoading}
             />
             <Button
               type="submit"
@@ -57,7 +60,7 @@ const LoginBox = React.memo(({ onSubmit }:any) => {
               fullWidth
               sx={{ mt: 2 }}
             >
-              Sign In
+              {isLoading ? <CircularProgress/> :"Log In"}
             </Button>
           </form>
         </CardContent>

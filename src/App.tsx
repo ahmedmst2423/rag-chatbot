@@ -5,7 +5,6 @@ import PrivateRoute from './components/privateRoute';
 import ChatPage from './pages/chat';
 import { useAuth } from './context/authContext';
 import RegisterPage from './pages/signup';
-import { SessionProvider } from './context/sessionContext';
 import ModalRenderer from './components/modalRenderer';
 
 function App() {
@@ -44,12 +43,10 @@ function App() {
         <Route
           path="/chat"
           element={
-            <SessionProvider>
             <PrivateRoute>
               <ChatPage />
               <ModalRenderer/>
             </PrivateRoute>
-              </SessionProvider>
           }
         />
         

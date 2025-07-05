@@ -9,21 +9,25 @@ import theme from '../theme.ts'
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from './utils/queryClient.ts'
 import { ModalProvider } from './context/modalContext.tsx'
+import { SessionProvider } from './context/sessionContext.tsx'
 // import ModalRenderer from './components/modalRenderer.tsx'
 
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
-    <AuthProvider>
       <NotificationProvider>
-        <ModalProvider>
+
         <QueryClientProvider client={queryClient}>
+          <SessionProvider>
+    <AuthProvider>
+        <ModalProvider>
             <App />
-        </QueryClientProvider>
         </ModalProvider>
-      </NotificationProvider>
     </AuthProvider>
+          </SessionProvider>
+        </QueryClientProvider>
+      </NotificationProvider>
     </ThemeProvider>
   </StrictMode>,
 )

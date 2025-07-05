@@ -1,10 +1,4 @@
-// UploadModal.tsx
-import 
-// React,
- { useCallback,
-  //  useEffect,
-    useState
-   } from 'react';
+import { useCallback, useState } from 'react';
 import {
   Box,
   Modal,
@@ -21,16 +15,23 @@ import { CloudUpload, Close } from '@mui/icons-material';
 import { useDropzone } from 'react-dropzone';
 import { useFiles } from '../hooks/useFiles';
 
+// 🔧 Responsive Modal Box style
 const style = {
   position: 'absolute' as const,
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 500,
-  p: 4,
+  width: {
+    xs: '90vw',   // mobile
+    sm: 400,      // small screen/tablets
+    md: 500       // desktop
+  },
+  p: 3,
   bgcolor: 'background.paper',
   boxShadow: 24,
   borderRadius: 2,
+  maxHeight: '90vh',
+  overflowY: 'auto',
 };
 
 const dropzoneStyle = {
@@ -45,9 +46,8 @@ const dropzoneStyle = {
 
 const UploadModal = (props: any) => {
   const { onSubmit, onClose } = props;
-  const {upload} = useFiles();
+  const { upload } = useFiles();
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setSelectedFiles((prev) => [...prev, ...acceptedFiles]);
@@ -58,7 +58,6 @@ const UploadModal = (props: any) => {
     multiple: true,
   });
 
-  
   const handleUpload = () => {
     if (selectedFiles.length > 0) {
       onSubmit(selectedFiles);
@@ -68,11 +67,14 @@ const UploadModal = (props: any) => {
   const handleRemoveFile = (index: number) => {
     setSelectedFiles((prev) => prev.filter((_, i) => i !== index));
   };
+
   return (
     <Modal open onClose={onClose}>
       <Box sx={style}>
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-          <Typography variant="h6">Upload Files</Typography>
+          <Typography variant="h6" fontSize={{ xs: '1rem', sm: '1.25rem' }}>
+            Upload Files
+          </Typography>
           <IconButton onClick={onClose}>
             <Close />
           </IconButton>
@@ -86,7 +88,7 @@ const UploadModal = (props: any) => {
             <Typography>{selectedFiles.length} file(s) selected</Typography>
           ) : (
             <Box>
-              <CloudUpload sx={{ fontSize: 48, color: 'tertiary' }} />
+              <CloudUpload sx={{ fontSize: 48, color: 'primary.main' }} />
               <Typography>Drag & drop files here, or click to select</Typography>
             </Box>
           )}
@@ -112,15 +114,17 @@ const UploadModal = (props: any) => {
           </List>
         )}
 
-        <Box mt={3} display="flex" justifyContent="flex-end" gap={2}>
-          <Button variant="text" disabled={upload.isPending} onClick={onClose}>Cancel</Button>
+        <Box mt={3} display="flex" justifyContent="flex-end" gap={2} flexWrap="wrap">
+          <Button variant="text" disabled={upload.isPending} onClick={onClose}>
+            Cancel
+          </Button>
           <Button
             color={selectedFiles.length === 0 ? 'primary' : 'secondary'}
             variant="contained"
             onClick={handleUpload}
             disabled={selectedFiles.length === 0 || upload.isPending}
           >
-            {upload.isPending ? <CircularProgress size={20} color="primary" /> : 'Upload'}
+            {upload.isPending ? <CircularProgress size={20} color="inherit" /> : 'Upload'}
           </Button>
         </Box>
       </Box>
