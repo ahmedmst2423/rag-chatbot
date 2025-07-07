@@ -9,16 +9,26 @@ import {
   CircularProgress
 } from '@mui/material';
 
-interface DeleteModalProps {
+interface ConfirmModalProps {
   onYes: () => void;
   onCancel: () => void;
   isLoading: boolean;
   text: string;
-  title:string;
+  title: string;
+  confirmText?: string;
+  loadingText?: string;
 }
 
-const ConfirmModal: React.FC<DeleteModalProps> = React.memo((props) => {
-  const { onYes, onCancel, isLoading, text, title } = props;
+const ConfirmModal: React.FC<ConfirmModalProps> = React.memo((props) => {
+  const {
+    onYes,
+    onCancel,
+    isLoading,
+    text,
+    title,
+    confirmText = 'Yes, Delete',
+    loadingText = 'Deleting...'
+  } = props;
 
   return (
     <Dialog open onClose={isLoading ? undefined : onCancel} disableEscapeKeyDown={isLoading}>
@@ -41,7 +51,7 @@ const ConfirmModal: React.FC<DeleteModalProps> = React.memo((props) => {
           disabled={isLoading}
           startIcon={isLoading && <CircularProgress size={18} color="inherit" />}
         >
-          {isLoading ? 'Deleting...' : 'Yes, Delete'}
+          {isLoading ? loadingText : confirmText}
         </Button>
       </DialogActions>
     </Dialog>

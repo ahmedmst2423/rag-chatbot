@@ -13,7 +13,6 @@ import {
 } from '@mui/material';
 import { CloudUpload, Close } from '@mui/icons-material';
 import { useDropzone } from 'react-dropzone';
-import { useFiles } from '../hooks/useFiles';
 
 // 🔧 Responsive Modal Box style
 const style = {
@@ -45,8 +44,7 @@ const dropzoneStyle = {
 };
 
 const UploadModal = (props: any) => {
-  const { onSubmit, onClose } = props;
-  const { upload } = useFiles();
+  const { onSubmit, onClose, isLoading } = props;
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -69,13 +67,13 @@ const UploadModal = (props: any) => {
   };
 
   return (
-    <Modal open onClose={onClose}>
+    <Modal open onClose={isLoading ? undefined : onClose} disableEscapeKeyDown={isLoading}>
       <Box sx={style}>
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
           <Typography variant="h6" fontSize={{ xs: '1rem', sm: '1.25rem' }}>
             Upload Files
           </Typography>
-          <IconButton onClick={onClose}>
+          <IconButton onClick={onClose} disabled={isLoading}>
             <Close />
           </IconButton>
         </Box>
@@ -100,7 +98,7 @@ const UploadModal = (props: any) => {
               <ListItem
                 key={index}
                 secondaryAction={
-                  <IconButton edge="end" onClick={() => handleRemoveFile(index)}>
+                  <IconButton edge="end" onClick={() => handleRemoveFile(index)} disabled={isLoading}>
                     <Close fontSize="small" />
                   </IconButton>
                 }
@@ -115,16 +113,17 @@ const UploadModal = (props: any) => {
         )}
 
         <Box mt={3} display="flex" justifyContent="flex-end" gap={2} flexWrap="wrap">
-          <Button variant="text" disabled={upload.isPending} onClick={onClose}>
+          <Button variant="text" disabled={isLoading} onClick={onClose}>
             Cancel
           </Button>
           <Button
             color={selectedFiles.length === 0 ? 'primary' : 'secondary'}
             variant="contained"
             onClick={handleUpload}
-            disabled={selectedFiles.length === 0 || upload.isPending}
+            disabled={selectedFiles.length === 0 || isLoading}
+            startIcon={isLoading && <CircularProgress size={18} color="inherit" />}
           >
-            {upload.isPending ? <CircularProgress size={20} color="inherit" /> : 'Upload'}
+            {isLoading ? 'Uploading...' : 'Upload'}
           </Button>
         </Box>
       </Box>
@@ -133,3 +132,4 @@ const UploadModal = (props: any) => {
 };
 
 export default UploadModal;
+

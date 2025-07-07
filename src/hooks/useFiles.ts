@@ -32,6 +32,7 @@ export const useFiles = () => {
     mutationFn:handleUpload,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['files'] });
+      showSuccess("File(s) Uploaded Successfully")
 
     },
     onError: () => {
@@ -44,7 +45,7 @@ export const useFiles = () => {
     mutationFn: deleteFile,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['files'] });
-      showSuccess('File deleted successfully');
+      showSuccess('File Deleted Successfully');
     }
     
   })
@@ -53,8 +54,6 @@ export const useFiles = () => {
     files, 
     isLoading, 
     upload,
-    isUploadLoading: upload.isPending, 
     remove,
-    isRemoveFileLoading: remove.isPending
    }
 }

@@ -1,12 +1,13 @@
 import { InsertDriveFile } from "@mui/icons-material";
 import { Box, Button, Card, CardActionArea, CardActions, CardContent, LinearProgress, Stack, Typography } from "@mui/material";
 import React from "react";
-
+import { useModal } from "../context/modalContext";
 
 const FilesTab = React.memo(({ files, onFileClick, onFileDelete, isLoading }: any) => {
   const handleDelete = (file: any) => {
     onFileDelete?.(file);
   };
+  const {openModal} = useModal();
 
   return (
     <Box sx={{ overflowY: 'auto', mt: 2 }}>
@@ -50,7 +51,10 @@ const FilesTab = React.memo(({ files, onFileClick, onFileDelete, isLoading }: an
                     handleDelete(file);
                   }}
                 >
+                  <Typography color="error">
+
                   Delete
+                  </Typography>
                 </Button>
               </CardActions>
             </Card>

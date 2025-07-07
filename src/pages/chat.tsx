@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '../context/authContext';
 import { useSession } from '../context/sessionContext';
 import { useFiles } from '../hooks/useFiles';
@@ -18,11 +18,8 @@ const ChatPage = () => {
 
   const {
     files,
-    // isLoading: loadingFiles,
     upload,
-    // isUploadLoading,
     remove: removeFile,
-    isRemoveFileLoading
   } = useFiles();
 
   const {
@@ -33,11 +30,19 @@ const ChatPage = () => {
   } = useSessions();
 
   const { chatHistory, chat, isChatLoading } = useChat(session);
-  const { openModal,
-     closeModal,
-      // modalType,
-      //  modalProps
-       } = useModal();
+  const { openModal, closeModal, modalType, setProps } = useModal();
+
+  useEffect(() => {
+    if (modalType === 'confirm') {
+      setProps({ isLoading: removeFile.isPending });
+    }
+  }, [removeFile.isPending, modalType, setProps]);
+
+  useEffect(() => {
+    if (modalType === 'upload') {
+      setProps({ isLoading: upload.isPending });
+    }
+  }, [upload.isPending, modalType, setProps]);
 
   const handleSend = (query: string) => {
     const userMessage = { role: 'user', message: query };
@@ -57,10 +62,10 @@ const ChatPage = () => {
             title: 'Delete File',
             text: `Are you sure you want to delete the file ${file.filename}`,
             onYes: () => {
-              removeFile.mutate(file.id, { onSuccess: closeModal });
+              removeFile.mutate(file.id,  { onSuccess: closeModal, onError: closeModal });
             },
             onCancel: closeModal,
-            isLoading: isRemoveFileLoading
+            isLoading: removeFile.isPending
           });
         }}
         onSessionClick={setSession}
@@ -97,6 +102,7 @@ const ChatPage = () => {
               onUpload={() =>
                 openModal('upload', {
                   onSubmit: (files: any) => upload.mutate(files, { onSuccess: closeModal }),
+                  isLoading: upload.isPending
                 })
               }
               query={query}

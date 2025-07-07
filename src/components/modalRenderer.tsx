@@ -7,7 +7,8 @@ import UploadModal from "./uploadModal";
 
 const MODAL_COMPONENTS: any = {
   confirm: ConfirmModal,
-  upload:UploadModal
+  upload:UploadModal,
+  delete:ConfirmModal
 };
 
 export default function ModalRenderer() {
