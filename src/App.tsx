@@ -8,10 +8,8 @@ import RegisterPage from './pages/signup';
 import ModalRenderer from './components/modalRenderer';
 
 function App() {
-  const { isAuthenticated} = useAuth();
+  const { isAuthenticated } = useAuth();
 
-  // Show loading spinner while checking authentication
-  
   return (
     <Router>
       <Routes>
@@ -22,35 +20,27 @@ function App() {
             isAuthenticated ? <Navigate to="/chat" replace /> : <LoginPage />
           } 
         />
-        
-        {/* Login route - redirect to chat if already authenticated */}
-        <Route 
-          path="/" 
-          element={
-            isAuthenticated ? <Navigate to="/chat" replace /> : <LoginPage />
-          } 
-        />
 
+        {/* Register route - redirect to chat if already authenticated */}
         <Route
-        path = "/register"
-        element={
-          isAuthenticated ? <Navigate to="/chat" replace /> : <RegisterPage/>
-        }
+          path="/register"
+          element={
+            isAuthenticated ? <Navigate to="/chat" replace /> : <RegisterPage />
+          }
         />
-        
-        {/* Protected chat route */}
 
+        {/* Protected chat route */}
         <Route
           path="/chat"
           element={
             <PrivateRoute>
               <ChatPage />
-              <ModalRenderer/>
+              <ModalRenderer />
             </PrivateRoute>
           }
         />
-        
-        {/* Catch all route - redirect to home */}
+
+        {/* Catch all - redirect to root */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
