@@ -10,7 +10,7 @@ QueryKoala is an intelligent, full-stack, Retrieval-Augmented Generation (RAG) b
 
 ## 🎥 Video Demonstration
 
-https://ahmedm-portfolio.netlify.app/projects/queryKoala/demo_video.mp4
+https://www.loom.com/embed/e7b6c7fa61d14b59afbc0c61811d8fea?sid=0f070b9e-5bf0-402a-ab60-0434899bf181
 
 ## 📸 Screenshots
 
