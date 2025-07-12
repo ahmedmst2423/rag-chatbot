@@ -60,7 +60,7 @@ https://www.loom.com/embed/e7b6c7fa61d14b59afbc0c61811d8fea?sid=0f070b9e-5bf0-40
 1.  **Clone the repository:**
 
     ```bash
-    git clone https://github.com/your-username/rag-chatbot.git
+    git clone https://github.com/ahmedmst2423/rag-chatbot.git
     cd rag-chatbot
     ```
 
@@ -76,7 +76,12 @@ https://www.loom.com/embed/e7b6c7fa61d14b59afbc0c61811d8fea?sid=0f070b9e-5bf0-40
     npm run dev
     ```
 
-4.  **Set up the backend:** (Assuming you have the backend code in a separate directory)
+4.  **Set up the backend:**
+    - Clone the backend repo
+    ```bash
+      git clone https://www.github.com/ahmedmst2423/rag-chatbot-api
+      ```
+
     - Install Python dependencies:
       ```bash
       pip install -r requirements.txt
@@ -87,6 +92,3 @@ https://www.loom.com/embed/e7b6c7fa61d14b59afbc0c61811d8fea?sid=0f070b9e-5bf0-40
       uvicorn main:app --reload
       ```
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
